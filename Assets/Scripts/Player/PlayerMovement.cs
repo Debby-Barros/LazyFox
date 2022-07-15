@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb2D;
     private bool isJumping;
+    private bool doubleJump;
 
     private AudioSource audioSource;
 
@@ -36,7 +37,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isJumping)
         {
+            doubleJump = true;
+            audioSource.Play();
+            isJumping = true;
+            rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
+            rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             return;
+        } else {
+            if (doubleJump){
+                //rb2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                
+            }
         }
 
         audioSource.Play();
